@@ -791,7 +791,7 @@ const CONFIG = {
   // 空のままなら、下のダミーデータ(フォールバック)が表示されます。
   // ※シートは「リンクを知っている全員が閲覧可」にしておく必要があります
   sheet: {
-    id: "",                // ← スプレッドシートID
+    id: "14cc2BFeHKAslU5eaYS8fqBc_qbjikrzvsXGpMkci5l0",  // バド部サイト_データシート
     eventsTab: "開催予定",  // 開催情報のタブ名
     membersTab: "メンバー"  // メンバー紹介のタブ名
   },
@@ -1023,7 +1023,7 @@ async function fetchTab(sheetId, tabName) {
     if (members.length) {
       renderMembers(members.map(r => ({
         name: r["名前"], role: r["役割"], badge: r["バッジ"], comment: r["コメント"]
-      })).filter(m => m.name));
+      })).filter(m => m.name && !String(m.name).startsWith("※"))); // ※で始まる行=注意書きなので除外
     }
   } catch (e) {
     console.warn("シート読み込みに失敗したため、埋め込みデータを表示しています:", e);
