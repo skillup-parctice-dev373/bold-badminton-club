@@ -6,26 +6,26 @@
 <title>BOLD BADMINTON CLUB | ボールドバドミントン部</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
-   BOLD BADMINTON CLUB — v2 (ballaholic hub インスパイア)
-   白ベース・余白重視・細い罫線のミニマルデザイン。
-   カラー設計:
-   - ベース   : 白 / オフホワイト
-   - テキスト : ほぼ黒 #101418
-   - アクセント: 会社カラーの深紺 #001489 (控えめに)
-   - 差し色   : イエロー #FFD400 (ごく少量)
+   BOLD BADMINTON CLUB — v6 (zero-fut-sakai.com インスパイア・クリーム基調)
+   - クリーム系2トーン(明るいクリーム × 少し深いクリーム)のセクション切替。黒は不使用
+   - 巨大な日本語見出し + 深紺のアクセントバー / 左端の縦書きラベル
+   - 角丸なしの四角いボタン + 丸い矢印アイコン
+   - 右下固定の「出欠登録」バナー(深紺) / フッターCTAカード
+   - スクロール連動: 画面中央の巨大シャトル線画が回転(低透明度)
+   カラー: 会社カラーの深紺 #001489 をポイントに、イエロー #FFD400 を差し色に
    ============================================================ */
 :root {
   --ink: #101418;
   --navy: #001489;
   --yellow: #FFD400;
   --green: #0E9F68;
-  --paper: #FFFFFF;
-  --paper-2: #F7F7F4;
-  --line: #E7E7E2;
-  --muted: #8B9097;
+  --paper: #F8F5EC;         /* 明るいクリーム */
+  --paper-2: #EFEADC;       /* 少し深いクリーム(セクション切替用) */
+  --line: rgba(16,20,24,0.14);
+  --muted: #8F8C82;
   --font-display: 'Inter', 'Noto Sans JP', sans-serif;
   --font-body: 'Noto Sans JP', sans-serif;
 }
@@ -41,33 +41,41 @@ body {
 ::selection { background: var(--yellow); color: var(--ink); }
 
 /* ---------- 共通 ---------- */
-.section { padding: 140px 6vw; position: relative; }
-.section-inner { max-width: 1040px; margin: 0 auto; }
-.sec-label {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 4.5vw, 3rem);
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  line-height: 1;
-  color: var(--ink);
-  display: flex;
-  align-items: baseline;
-  gap: 16px;
-}
-.sec-label .jp {
+.section { padding: 130px 7vw 140px; position: relative; }
+.section-inner { max-width: 1120px; margin: 0 auto; position: relative; }
+/* 巨大な日本語見出し (ZERO風のスケール感を和文で) */
+.sec-title {
   font-family: var(--font-body);
-  font-size: 0.78rem;
-  font-weight: 500;
-  color: var(--muted);
-  letter-spacing: 0.24em;
+  font-size: clamp(2.2rem, 6vw, 4.4rem);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  line-height: 1.15;
 }
-.sec-label::after {
+/* 見出し下のアクセントバー: ボールドカラーの深紺 (黒背景ではイエロー) */
+.sec-title::after {
   content: "";
-  flex: 1;
-  height: 1px;
-  background: var(--line);
+  display: block;
+  width: 52px;
+  height: 6px;
+  margin-top: 24px;
+  background: var(--navy);
 }
-.sec-head { margin-bottom: 72px; }
+.sec-head { margin-bottom: 64px; }
+/* 左端の縦書きセクションラベル */
+.v-label {
+  position: absolute;
+  left: 2vw;
+  top: 130px;
+  writing-mode: vertical-rl;
+  font-family: var(--font-display);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.34em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+/* 深いクリームのセクション(旧・黒セクションの置き換え) */
+.is-deep { background: var(--paper-2); }
 
 /* スクロール出現アニメーション */
 .reveal {
@@ -78,7 +86,6 @@ body {
 .reveal.is-visible { opacity: 1; transform: translateY(0); }
 .reveal-delay-1 { transition-delay: 0.1s; }
 .reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
 
 /* ---------- ヘッダー ---------- */
 .header {
@@ -86,82 +93,76 @@ body {
   top: 0; left: 0; right: 0;
   z-index: 100;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 22px 5vw;
-  transition: background 0.4s, box-shadow 0.4s, padding 0.4s;
-}
-.header.is-scrolled {
-  background: rgba(255,255,255,0.92);
-  backdrop-filter: blur(10px);
+  align-items: stretch;
+  background: var(--paper);
   border-bottom: 1px solid var(--line);
-  padding: 14px 5vw;
+  height: 64px;
 }
 .header-logo {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 0.95rem;
-  color: var(--ink);
-  letter-spacing: 0.14em;
-  text-decoration: none;
   display: flex;
   align-items: center;
   gap: 10px;
+  padding: 0 26px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--ink);
+  letter-spacing: 0.12em;
+  text-decoration: none;
 }
 .header-logo .dot { color: var(--yellow); }
-.gnav { display: flex; gap: 30px; }
+.gnav { display: flex; margin-left: auto; }
 .gnav a {
+  display: flex;
+  align-items: center;
+  padding: 0 22px;
   color: var(--ink);
   text-decoration: none;
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  position: relative;
-  padding: 4px 0;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  transition: opacity 0.25s;
 }
-.gnav a::after {
-  content: "";
-  position: absolute;
-  left: 0; bottom: 0;
-  width: 100%; height: 1px;
-  background: var(--ink);
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.35s cubic-bezier(.2,.7,.3,1);
+.gnav a:hover { opacity: 0.55; }
+/* 右端の黒いブロックボタン (ZEROのContact風) */
+.gnav a.nav-cta {
+  background: var(--navy);
+  color: #FFF;
+  padding: 0 34px;
+  border-left: 1px solid var(--line);
 }
-.gnav a:hover::after { transform: scaleX(1); transform-origin: left; }
-@media (max-width: 760px) { .gnav { display: none; } }
+.gnav a.nav-cta:hover { opacity: 1; background: #0A2AB8; }
+@media (max-width: 860px) {
+  .gnav a:not(.nav-cta) { display: none; }
+}
 
-/* ---------- ヒーロー ---------- */
+/* ---------- ヒーロー (クリーム + コートアニメーション) ---------- */
 .hero {
   position: relative;
-  min-height: 96svh;
-  background: var(--paper);
+  min-height: 100svh;
+  background: var(--paper-2);
   color: var(--ink);
   display: flex;
   align-items: center;
   overflow: hidden;
+  padding-top: 64px;
 }
-#court-canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
+#court-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 .hero-inner {
   position: relative;
   z-index: 2;
-  padding: 0 6vw;
-  max-width: 1200px;
-  margin: 0 auto;
+  padding: 0 7vw;
   width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
 }
 .hero-catch {
   font-family: var(--font-display);
-  font-size: clamp(3.2rem, 11vw, 8.5rem);
-  font-weight: 700;
-  line-height: 0.98;
-  letter-spacing: -0.01em;
+  font-size: clamp(3.4rem, 11.5vw, 9.5rem);
+  font-weight: 800;
+  line-height: 0.96;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
 }
 .hero-catch .line { display: block; overflow: hidden; }
@@ -177,8 +178,7 @@ body {
 .hero-sub {
   margin-top: 36px;
   font-size: clamp(0.9rem, 1.4vw, 1.02rem);
-  font-weight: 400;
-  color: #4A5058;
+  color: #55524A;
   letter-spacing: 0.06em;
   opacity: 0;
   animation: fadein 1.1s ease 0.8s forwards;
@@ -186,30 +186,32 @@ body {
 .hero-sub strong { color: var(--ink); font-weight: 700; }
 @keyframes fadein { to { opacity: 1; } }
 .hero-cta {
-  margin-top: 44px;
+  margin-top: 46px;
   display: flex;
   gap: 14px;
   flex-wrap: wrap;
   opacity: 0;
   animation: fadein 1.1s ease 1.1s forwards;
 }
+/* 左端の縦書きSCROLL */
 .scroll-cue {
   position: absolute;
-  bottom: 28px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 2vw;
+  bottom: 30px;
   z-index: 2;
+  writing-mode: vertical-rl;
   color: var(--muted);
+  font-family: var(--font-display);
   font-size: 0.62rem;
+  font-weight: 600;
   letter-spacing: 0.34em;
-  text-align: center;
 }
 .scroll-cue::after {
   content: "";
   display: block;
   width: 1px;
-  height: 44px;
-  margin: 10px auto 0;
+  height: 46px;
+  margin: 12px auto 0;
   background: linear-gradient(var(--ink), transparent);
   animation: cue 1.8s ease-in-out infinite;
 }
@@ -220,69 +222,92 @@ body {
   100% { transform: scaleY(0); transform-origin: bottom; }
 }
 
-/* ボタン */
+/* ---------- ボタン (角丸なしの四角 + 丸矢印) ---------- */
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 15px 32px;
-  border-radius: 999px;
-  font-weight: 600;
+  justify-content: space-between;
+  gap: 22px;
+  padding: 16px 20px 16px 26px;
+  font-family: var(--font-display);
+  font-weight: 700;
   font-size: 0.85rem;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-decoration: none;
-  transition: transform 0.25s, box-shadow 0.25s, background 0.25s, color 0.25s, border-color 0.25s;
+  transition: transform 0.25s, background 0.25s, color 0.25s, border-color 0.25s;
 }
 .btn:hover { transform: translateY(-2px); }
-.btn:active { transform: translateY(0); }
-.btn-primary {
-  background: var(--navy);
-  color: var(--paper);
+.btn .circ {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  flex: none;
+  transition: transform 0.25s;
 }
-.btn-primary:hover { background: #0A2AB8; box-shadow: 0 10px 28px rgba(0,20,137,0.22); }
-.btn-secondary {
-  border: 1px solid #C9CCC9;
-  color: var(--ink);
-  background: transparent;
-}
-.btn-secondary:hover { border-color: var(--ink); }
-.btn .arrow { transition: transform 0.25s; }
-.btn:hover .arrow { transform: translateX(5px); }
+.btn:hover .circ { transform: translateX(4px); }
+.btn-yellow { background: var(--yellow); color: var(--ink); }
+.btn-yellow .circ { background: var(--ink); color: var(--yellow); }
+.btn-navy { background: var(--navy); color: #FFF; }
+.btn-navy .circ { background: #FFF; color: var(--navy); }
+.btn-ghost, .btn-ghost-ink { border: 1px solid var(--ink); color: var(--ink); }
+.btn-ghost .circ, .btn-ghost-ink .circ { border: 1px solid var(--ink); color: var(--ink); }
 
-/* ---------- マーキー ---------- */
-.marquee {
-  background: var(--paper);
-  color: var(--muted);
-  overflow: hidden;
-  padding: 16px 0;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-}
-.marquee-track {
+/* ---------- 右下固定の出欠バナー (ZEROのReserve風) ---------- */
+.fixed-reserve {
+  position: fixed;
+  right: 0;
+  bottom: 34px;
+  z-index: 90;
   display: flex;
-  gap: 56px;
-  white-space: nowrap;
-  width: max-content;
-  animation: marquee 36s linear infinite;
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: 0.78rem;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
+  align-items: center;
+  justify-content: space-between;
+  gap: 26px;
+  width: min(330px, 84vw);
+  padding: 20px 22px 20px 28px;
+  background: var(--navy);
+  color: #FFF;
+  border-left: 6px solid var(--yellow);
+  text-decoration: none;
+  box-shadow: 0 14px 36px rgba(0,20,137,0.3);
+  transition: transform 0.3s;
 }
-.marquee-track .y { color: var(--yellow); }
-@keyframes marquee { to { transform: translateX(-50%); } }
+.fixed-reserve:hover { transform: translateX(-6px); }
+.fixed-reserve .t {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.05rem;
+  line-height: 1.2;
+  letter-spacing: 0.04em;
+}
+.fixed-reserve .t small {
+  display: block;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  margin-top: 4px;
+}
+.fixed-reserve .circ {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
 
-/* ---------- NEXT GAME ---------- */
+/* ---------- NEXT GAME (白) ---------- */
 .next-card {
-  background: var(--paper);
-  color: var(--ink);
+  background: #FFFFFF;
   border: 1px solid var(--line);
-  border-radius: 16px;
-  padding: 56px 6%;
+  padding: 60px 6%;
   display: grid;
   grid-template-columns: 1fr 1.5fr auto;
-  gap: 40px;
+  gap: 44px;
   align-items: center;
   position: relative;
   overflow: hidden;
@@ -290,33 +315,35 @@ body {
 .next-card::before {
   content: "NEXT";
   position: absolute;
-  right: 8px;
-  top: -28px;
+  right: 6px;
+  top: -30px;
   font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 8rem;
-  color: #F2F2EE;
+  font-weight: 800;
+  font-size: 8.5rem;
+  color: rgba(16,20,24,0.045);
   letter-spacing: 0.02em;
   pointer-events: none;
 }
 .next-date {
   text-align: center;
   border-right: 1px solid var(--line);
-  padding-right: 32px;
+  padding-right: 36px;
   position: relative;
   z-index: 1;
 }
-.next-date .month { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.24em; color: var(--navy); }
+.next-date .month {
+  font-family: var(--font-display);
+  font-size: 0.85rem; font-weight: 700; letter-spacing: 0.22em; color: var(--navy);
+}
 .next-date .day {
   font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 5rem;
+  font-weight: 800;
+  font-size: 5.4rem;
   line-height: 1.05;
-  color: var(--ink);
 }
-.next-date .wd { font-size: 0.78rem; color: var(--muted); font-weight: 500; }
+.next-date .wd { font-size: 0.78rem; color: var(--muted); font-weight: 700; }
 .next-info { position: relative; z-index: 1; }
-.next-info .place { font-size: 1.4rem; font-weight: 700; margin-bottom: 6px; }
+.next-info .place { font-size: 1.4rem; font-weight: 900; margin-bottom: 6px; }
 .next-info .meta { font-size: 0.86rem; color: #5A6068; }
 .next-info .meta span { margin-right: 18px; }
 .next-actions { display: flex; flex-direction: column; gap: 12px; position: relative; z-index: 1; }
@@ -325,73 +352,62 @@ body {
   display: inline-flex;
   gap: 10px;
   font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.1rem;
+  font-weight: 800;
+  font-size: 1.15rem;
   color: var(--navy);
   letter-spacing: 0.04em;
 }
-.countdown small { font-family: var(--font-body); font-weight: 400; font-size: 0.68rem; color: var(--muted); align-self: end; }
+.countdown small { font-family: var(--font-body); font-weight: 500; font-size: 0.68rem; color: var(--muted); align-self: end; }
 @media (max-width: 860px) {
   .next-card { grid-template-columns: 1fr; text-align: center; }
   .next-date { border-right: none; border-bottom: 1px solid var(--line); padding: 0 0 24px; }
   .next-actions { flex-direction: row; justify-content: center; flex-wrap: wrap; }
 }
 
-/* ---------- ABOUT ---------- */
+/* ---------- ABOUT (白) ---------- */
 .about-grid {
   display: grid;
-  grid-template-columns: 1.15fr 1fr;
+  grid-template-columns: 1.1fr 1fr;
   gap: 64px;
   align-items: center;
 }
 .about-copy h3 {
   font-size: clamp(1.4rem, 2.8vw, 1.9rem);
-  font-weight: 700;
+  font-weight: 900;
   line-height: 1.6;
   margin-bottom: 24px;
-  letter-spacing: 0.02em;
 }
 .about-copy h3 .marker {
   background: linear-gradient(transparent 68%, var(--yellow) 68%);
   padding: 0 2px;
 }
 .about-copy p { color: #4A5058; font-size: 0.93rem; margin-bottom: 16px; }
-.stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-  margin-top: 40px;
-}
+.stats { display: flex; margin-top: 40px; }
 .stat {
-  background: var(--paper);
+  background: #FFF;
   border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 24px 10px;
+  padding: 24px 40px;
   text-align: center;
+  min-width: 190px;
 }
 .stat .num {
   font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 2.2rem;
+  font-weight: 800;
+  font-size: 2.4rem;
   color: var(--navy);
   line-height: 1.1;
 }
 .stat .num .unit { font-size: 0.95rem; }
 .stat .label {
-  font-size: 0.68rem; font-weight: 500; color: var(--muted); letter-spacing: 0.16em; margin-top: 8px;
+  font-size: 0.68rem; font-weight: 700; color: var(--muted); letter-spacing: 0.16em; margin-top: 8px;
   padding-top: 8px; position: relative;
 }
 .stat .label::before {
   content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-  width: 20px; height: 2px; background: var(--yellow);
+  width: 22px; height: 3px; background: var(--yellow);
 }
 .about-visual { position: relative; }
-.photo-frame {
-  border-radius: 10px;
-  overflow: hidden;
-  border: 1px solid var(--line);
-  transition: transform 0.4s;
-}
+.photo-frame { overflow: hidden; border: 1px solid var(--line); transition: transform 0.4s; }
 .photo-frame:hover { transform: translateY(-4px); }
 .photo-frame + .photo-frame {
   position: absolute;
@@ -399,13 +415,13 @@ body {
   bottom: -40px;
   left: -28px;
   border: 6px solid var(--paper);
-  box-shadow: 0 16px 40px rgba(16,20,24,0.12);
+  box-shadow: 0 16px 40px rgba(16,20,24,0.14);
 }
 .ph {
   display: block;
   width: 100%;
   aspect-ratio: 4 / 3;
-  background: #EDEDE9;
+  background: linear-gradient(135deg, #EDE8DA 0%, #E5DFCE 70%, #D9D3C0 100%);
   position: relative;
 }
 .ph::after {
@@ -415,151 +431,49 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #A9ADA6;
-  font-weight: 500;
-  font-size: 0.72rem;
-  letter-spacing: 0.2em;
+  color: #A8A395;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.7rem;
+  letter-spacing: 0.24em;
 }
 @media (max-width: 860px) {
   .about-grid { grid-template-columns: 1fr; }
   .about-visual { margin-top: 30px; }
 }
 
-/* ---------- 部長挨拶 ---------- */
-.greeting {
-  background: var(--paper-2);
-  color: var(--ink);
-}
-.greeting .sec-label { color: var(--ink); }
-.greeting-card {
-  display: grid;
-  grid-template-columns: 250px 1fr;
-  gap: 56px;
-  align-items: start;
-}
-.captain-photo {
-  border-radius: 10px;
-  overflow: hidden;
-  border: 1px solid var(--line);
-  background: var(--paper);
-}
-.captain-photo .ph { aspect-ratio: 3 / 4; background: #E9E9E4; }
-.captain-name { margin-top: 18px; text-align: center; }
-.captain-name .en {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 0.7rem;
-  color: var(--navy);
-  letter-spacing: 0.28em;
-}
-.captain-name .jp { font-weight: 700; }
-.greeting-body .quote {
-  font-size: clamp(1.15rem, 2.2vw, 1.45rem);
-  font-weight: 700;
-  line-height: 1.8;
-  margin-bottom: 28px;
-  position: relative;
-  padding-left: 22px;
-  border-left: 3px solid var(--navy);
-}
-.greeting-body p { color: #4A5058; font-size: 0.93rem; margin-bottom: 16px; }
-@media (max-width: 860px) {
-  .greeting-card { grid-template-columns: 1fr; }
-  .captain-photo { max-width: 250px; margin: 0 auto; }
-}
-
-/* ---------- MEMBERS ---------- */
-.member-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
-  gap: 20px;
-}
-.member-card {
-  background: var(--paper);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  overflow: hidden;
-  transition: transform 0.35s cubic-bezier(.2,.7,.3,1), box-shadow 0.35s;
-  cursor: default;
-  position: relative;
-}
-.member-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 18px 40px rgba(16,20,24,0.1);
-}
-.member-card .ph { aspect-ratio: 1 / 1; background: #EDEDE9; }
-.member-card:nth-child(even) .ph { background: #E7E9EF; }
-.member-body { padding: 18px 20px 22px; }
-.member-name { font-weight: 700; font-size: 1rem; }
-.member-role {
-  display: inline-block;
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  color: var(--navy);
-  border: 1px solid rgba(0,20,137,0.25);
-  border-radius: 999px;
-  padding: 2px 10px;
-  margin: 8px 0 10px;
-}
-.member-comment { font-size: 0.8rem; color: #5A6068; line-height: 1.8; }
-.member-card .badge {
-  position: absolute;
-  top: 12px; right: 12px;
-  background: var(--yellow);
-  color: var(--ink);
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 0.66rem;
-  letter-spacing: 0.12em;
-  border-radius: 6px;
-  padding: 3px 9px;
-}
-
-/* ---------- 過去の開催場所 ---------- */
-.history-list { position: relative; padding-left: 34px; }
-.history-list::before {
-  content: "";
-  position: absolute;
-  left: 9px; top: 8px; bottom: 8px;
-  width: 1px;
-  background: var(--line);
-}
+/* ---------- HISTORY (深いクリーム・番号付きリスト) ---------- */
+.history-list { border-top: 1px solid var(--line); }
 .history-item {
-  position: relative;
-  background: var(--paper);
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  padding: 18px 24px;
-  margin-bottom: 14px;
   display: flex;
-  gap: 24px;
+  gap: 28px;
   align-items: center;
   flex-wrap: wrap;
-  transition: transform 0.3s, border-color 0.3s;
+  padding: 24px 6px;
+  border-bottom: 1px solid var(--line);
+  transition: background 0.3s, padding 0.3s;
 }
-.history-item:hover { transform: translateX(6px); border-color: #C9CCC9; }
-.history-item::before {
-  content: "";
-  position: absolute;
-  left: -30px;
-  width: 9px; height: 9px;
-  border-radius: 50%;
-  background: var(--paper);
-  border: 2px solid var(--navy);
+.history-item:hover { background: rgba(255,255,255,0.55); padding-left: 14px; }
+.history-no {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.78rem;
+  color: var(--navy);
+  letter-spacing: 0.12em;
+  min-width: 30px;
 }
 .history-date {
   font-family: var(--font-display);
   font-weight: 600;
   font-size: 0.95rem;
-  color: var(--navy);
+  color: var(--muted);
   letter-spacing: 0.06em;
-  min-width: 104px;
+  min-width: 108px;
 }
-.history-place { font-weight: 700; font-size: 0.95rem; }
+.history-place { font-weight: 700; font-size: 0.95rem; color: var(--ink); }
 .history-note { font-size: 0.78rem; color: var(--muted); margin-left: auto; }
 
-/* ---------- LINKS ---------- */
+/* ---------- LINKS (白・角なしカード) ---------- */
 .link-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -567,34 +481,29 @@ body {
 }
 .link-card {
   border: 1px solid var(--line);
-  border-radius: 16px;
-  padding: 40px 36px;
-  background: var(--paper);
+  padding: 42px 38px;
+  background: #FFF;
   color: var(--ink);
   text-decoration: none;
-  position: relative;
-  overflow: hidden;
-  min-height: 180px;
+  min-height: 190px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: transform 0.35s cubic-bezier(.2,.7,.3,1), box-shadow 0.35s, border-color 0.35s;
+  transition: transform 0.35s cubic-bezier(.2,.7,.3,1), box-shadow 0.35s;
 }
 .link-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 20px 44px rgba(16,20,24,0.1);
-  border-color: #C9CCC9;
+  box-shadow: 0 20px 44px rgba(16,20,24,0.12);
 }
 .link-card::before {
   content: "";
   display: block;
-  width: 34px; height: 3px;
-  border-radius: 2px;
+  width: 36px; height: 4px;
   margin-bottom: 18px;
 }
 .link-card.board::before { background: var(--navy); }
 .link-card.chousei::before { background: var(--green); }
-.link-card h4 { font-size: 1.2rem; font-weight: 700; margin-bottom: 8px; }
+.link-card h4 { font-size: 1.2rem; font-weight: 900; margin-bottom: 8px; }
 .link-card p { font-size: 0.84rem; color: #5A6068; }
 .link-card .go {
   align-self: flex-end;
@@ -609,26 +518,105 @@ body {
   transition: transform 0.3s, background 0.3s, color 0.3s;
   margin-top: 18px;
 }
-.link-card:hover .go { transform: translateX(6px); background: var(--ink); color: var(--paper); }
+.link-card:hover .go { transform: translateX(6px); background: var(--ink); color: #FFF; }
 
-/* ---------- フッター ---------- */
+/* ---------- フッター (深いクリーム + CTAカード2枚) ---------- */
 .footer {
   background: var(--paper-2);
   border-top: 1px solid var(--line);
-  color: var(--muted);
-  padding: 56px 6vw 40px;
-  text-align: center;
-}
-.footer .logo {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1rem;
   color: var(--ink);
-  letter-spacing: 0.16em;
-  margin-bottom: 10px;
+  padding: 110px 7vw 60px;
 }
-.footer .logo .dot { color: var(--yellow); }
-.footer small { font-size: 0.7rem; letter-spacing: 0.06em; }
+.footer-inner { max-width: 1120px; margin: 0 auto; }
+.footer-logo {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+}
+.footer-logo .dot { color: var(--yellow); }
+.footer-note { margin-top: 14px; font-size: 0.8rem; color: var(--muted); }
+.footer-cta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+  margin-top: 48px;
+}
+.footer-cta a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 34px 34px;
+  text-decoration: none;
+  transition: transform 0.3s;
+}
+.footer-cta a:hover { transform: translateY(-4px); }
+.footer-cta .t {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.3rem;
+  line-height: 1.3;
+}
+.footer-cta .t small {
+  display: block;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  margin-top: 6px;
+}
+.footer-cta .circ {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  border: 1.5px solid currentColor;
+}
+.footer-cta .cta-chousei { background: var(--navy); color: #FFF; border-left: 6px solid var(--yellow); }
+.footer-cta .cta-board { background: #FFF; color: var(--ink); border: 1px solid var(--line); }
+.footer-copy {
+  margin-top: 70px;
+  padding-top: 26px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 0.7rem;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+}
+/* ---------- スクロール連動: 画面中央の巨大シャトル ---------- */
+/* 低透明度の線画をコンテンツの上に重ねる(pointer-events:noneで操作は素通し)。
+   スクロール量に応じてJSで回転させ、明暗セクションに合わせて色を自動で切り替える */
+.shuttle-bg {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  width: min(74vw, 640px);
+  aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%);
+  z-index: 60;
+  pointer-events: none;
+  will-change: transform;
+}
+.shuttle-bg svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  stroke: var(--navy);
+  opacity: 0.06;
+}
+@media (prefers-reduced-motion: reduce) { .shuttle-bg { display: none; } }
+
+@media (max-width: 760px) {
+  .v-label { display: none; }
+  .scroll-cue { display: none; }
+}
 </style>
 </head>
 <body>
@@ -636,16 +624,15 @@ body {
 <header class="header" id="header">
   <a class="header-logo" href="#top">BOLD BADMINTON CLUB<span class="dot">.</span></a>
   <nav class="gnav">
-    <a href="#next">NEXT GAME</a>
-    <a href="#about">ABOUT</a>
-    <a href="#greeting">GREETING</a>
-    <a href="#members">MEMBERS</a>
-    <a href="#history">HISTORY</a>
-    <a href="#links">LINKS</a>
+    <a href="#next">次回の開催</a>
+    <a href="#about">部活紹介</a>
+    <a href="#history">過去の開催</a>
+    <a href="#links">リンク</a>
+    <a class="nav-cta" href="https://chouseisan.com/s?h=f5245b769ba74757a96282073a761ce0" target="_blank" rel="noopener">出欠登録</a>
   </nav>
 </header>
 
-<!-- ============ HERO ============ -->
+<!-- ============ HERO (深いクリーム) ============ -->
 <section class="hero" id="top">
   <canvas id="court-canvas"></canvas>
   <div class="hero-inner">
@@ -659,30 +646,19 @@ body {
       経験者も未経験者も、<strong>シャトル一つでつながる</strong>社内コミュニティ。
     </p>
     <div class="hero-cta">
-      <a class="btn btn-primary" href="#next">次回の開催をチェック <span class="arrow">→</span></a>
-      <a class="btn btn-secondary" href="#about">部活について <span class="arrow">→</span></a>
+      <a class="btn btn-yellow" href="#next">次回の開催をチェック <span class="circ">→</span></a>
+      <a class="btn btn-ghost" href="#about">部活について <span class="circ">→</span></a>
     </div>
   </div>
   <div class="scroll-cue">SCROLL</div>
 </section>
 
-<!-- ============ マーキー ============ -->
-<div class="marquee" aria-hidden="true">
-  <div class="marquee-track" id="marquee-track">
-    <span>BOLD BADMINTON CLUB</span><span class="y">★</span>
-    <span>EVERYONE IS WELCOME</span><span class="y">★</span>
-    <span>SMASH YOUR LIMITS</span><span class="y">★</span>
-    <span>BOLD BADMINTON CLUB</span><span class="y">★</span>
-    <span>EVERYONE IS WELCOME</span><span class="y">★</span>
-    <span>SMASH YOUR LIMITS</span><span class="y">★</span>
-  </div>
-</div>
-
-<!-- ============ NEXT GAME ============ -->
+<!-- ============ NEXT GAME (白) ============ -->
 <section class="section" id="next">
+  <span class="v-label">NEXT GAME</span>
   <div class="section-inner">
     <div class="sec-head reveal">
-      <h2 class="sec-label">NEXT GAME <span class="jp">次回の開催</span></h2>
+      <h2 class="sec-title">次回の開催</h2>
     </div>
     <div class="next-card reveal" id="next-card">
       <!-- JSにより CONFIG.nextEvent から描画 -->
@@ -690,11 +666,12 @@ body {
   </div>
 </section>
 
-<!-- ============ ABOUT ============ -->
-<section class="section" id="about" style="background: var(--white);">
+<!-- ============ ABOUT (白) ============ -->
+<section class="section" id="about" style="padding-top: 0;">
+  <span class="v-label" style="top: 0;">ABOUT</span>
   <div class="section-inner">
     <div class="sec-head reveal">
-      <h2 class="sec-label">ABOUT <span class="jp">部活紹介</span></h2>
+      <h2 class="sec-title">部活紹介</h2>
     </div>
     <div class="about-grid">
       <div class="about-copy reveal">
@@ -702,57 +679,23 @@ body {
         <p>ボールドバドミントン部は、月2回のペースで都内の体育館を借りて活動している社内サークルです。現場が違うエンジニア同士が顔を合わせられる、貴重な「リアルの接点」でもあります。</p>
         <p>ガチ勢もエンジョイ勢も大歓迎。ラケットの貸し出しもあるので、手ぶら参加OKです。汗を流したあとの一杯まで含めて部活です。</p>
         <div class="stats">
-          <div class="stat reveal reveal-delay-1"><div class="num"><span class="count" data-target="18">0</span><span class="unit">名</span></div><div class="label">部員数</div></div>
-          <div class="stat reveal reveal-delay-2"><div class="num"><span class="count" data-target="2">0</span><span class="unit">回/月</span></div><div class="label">活動頻度</div></div>
-          <div class="stat reveal reveal-delay-3"><div class="num"><span class="count" data-target="2024">0</span></div><div class="label">発足年</div></div>
+          <div class="stat reveal reveal-delay-1"><div class="num"><span class="count" data-target="2">0</span><span class="unit">回/月</span></div><div class="label">活動頻度</div></div>
         </div>
       </div>
       <div class="about-visual reveal reveal-delay-1">
-        <div class="photo-frame"><span class="ph" data-label="活動写真 PHOTO 01"></span></div>
+        <div class="photo-frame"><span class="ph" data-label="PHOTO 01"></span></div>
         <div class="photo-frame"><span class="ph" data-label="PHOTO 02"></span></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ 部長挨拶 ============ -->
-<section class="section greeting" id="greeting">
+<!-- ============ HISTORY (深いクリーム) ============ -->
+<section class="section is-deep" id="history">
+  <span class="v-label">HISTORY</span>
   <div class="section-inner">
     <div class="sec-head reveal">
-      <h2 class="sec-label">GREETING <span class="jp">部長挨拶</span></h2>
-    </div>
-    <div class="greeting-card">
-      <div class="reveal">
-        <div class="captain-photo"><span class="ph" data-label="部長 PHOTO"></span></div>
-        <div class="captain-name">
-          <div class="en">CAPTAIN</div>
-          <div class="jp" id="captain-name">（部長名）</div>
-        </div>
-      </div>
-      <div class="greeting-body reveal reveal-delay-1" id="greeting-body">
-        <!-- JSにより CONFIG.greeting から描画 -->
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ MEMBERS ============ -->
-<section class="section" id="members">
-  <div class="section-inner">
-    <div class="sec-head reveal">
-      <h2 class="sec-label">MEMBERS <span class="jp">メンバー紹介</span></h2>
-    </div>
-    <div class="member-grid" id="member-grid">
-      <!-- JSにより CONFIG.members から描画 -->
-    </div>
-  </div>
-</section>
-
-<!-- ============ HISTORY ============ -->
-<section class="section" id="history" style="background: var(--white);">
-  <div class="section-inner">
-    <div class="sec-head reveal">
-      <h2 class="sec-label">HISTORY <span class="jp">過去の開催場所</span></h2>
+      <h2 class="sec-title">過去の開催場所</h2>
     </div>
     <div class="history-list" id="history-list">
       <!-- JSにより CONFIG.pastEvents から描画 -->
@@ -760,11 +703,12 @@ body {
   </div>
 </section>
 
-<!-- ============ LINKS ============ -->
+<!-- ============ LINKS (白) ============ -->
 <section class="section" id="links">
+  <span class="v-label">LINKS</span>
   <div class="section-inner">
     <div class="sec-head reveal">
-      <h2 class="sec-label">LINKS <span class="jp">活動報告・出欠はこちら</span></h2>
+      <h2 class="sec-title">活動報告・出欠</h2>
     </div>
     <div class="link-grid" id="link-grid">
       <!-- JSにより CONFIG.links から描画 -->
@@ -772,10 +716,53 @@ body {
   </div>
 </section>
 
+<!-- ============ フッター (深いクリーム + CTA) ============ -->
 <footer class="footer">
-  <div class="logo">BOLD BADMINTON CLUB<span class="dot">.</span></div>
-  <small>© BOLD BADMINTON CLUB — 株式会社ボールド 社内サークル</small>
+  <div class="footer-inner">
+    <div class="footer-logo">BOLD<br>BADMINTON CLUB<span class="dot">.</span></div>
+    <div class="footer-note">株式会社ボールド 社内サークル / 活動は月2回・都内体育館にて</div>
+    <div class="footer-cta">
+      <a class="cta-chousei" href="https://chouseisan.com/s?h=f5245b769ba74757a96282073a761ce0" target="_blank" rel="noopener">
+        <span class="t">出欠登録<small>調整さんはこちら</small></span>
+        <span class="circ">→</span>
+      </a>
+      <a class="cta-board" href="https://portal.bold.ne.jp/wiki/detail/16886" target="_blank" rel="noopener">
+        <span class="t">社内掲示板<small>活動報告・告知はこちら</small></span>
+        <span class="circ">→</span>
+      </a>
+    </div>
+    <div class="footer-copy">
+      <span>© BOLD BADMINTON CLUB</span>
+      <span>EVERYONE IS WELCOME</span>
+    </div>
+  </div>
 </footer>
+
+<!-- スクロール連動: 画面中央の巨大シャトル(線画・低透明度) -->
+<div class="shuttle-bg" id="shuttle-bg" aria-hidden="true">
+  <svg viewBox="0 0 240 240" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <!-- コルク -->
+    <circle cx="120" cy="182" r="22"/>
+    <path d="M98 178 a22 22 0 0 1 44 0"/>
+    <!-- 羽根の外形 -->
+    <path d="M102 169 L58 58"/>
+    <path d="M138 169 L182 58"/>
+    <path d="M58 58 Q120 36 182 58"/>
+    <!-- 羽根の帯 -->
+    <path d="M72 93 Q120 74 168 93"/>
+    <path d="M86 128 Q120 112 154 128"/>
+    <!-- 羽根の骨 -->
+    <path d="M120 160 L120 44"/>
+    <path d="M110 162 L84 62"/>
+    <path d="M130 162 L156 62"/>
+  </svg>
+</div>
+
+<!-- 右下固定の出欠バナー -->
+<a class="fixed-reserve" href="https://chouseisan.com/s?h=f5245b769ba74757a96282073a761ce0" target="_blank" rel="noopener">
+  <span class="t">出欠登録<small>調整さんはこちら</small></span>
+  <span class="circ">＋</span>
+</a>
 
 <script>
 /* ============================================================
@@ -792,8 +779,7 @@ const CONFIG = {
   // ※シートは「リンクを知っている全員が閲覧可」にしておく必要があります
   sheet: {
     id: "14cc2BFeHKAslU5eaYS8fqBc_qbjikrzvsXGpMkci5l0",  // バド部サイト_データシート
-    eventsTab: "開催予定",  // 開催情報のタブ名
-    membersTab: "メンバー"  // メンバー紹介のタブ名
+    eventsTab: "開催予定"  // 開催情報のタブ名
   },
 
   // ---- 次回の開催情報 (シート未設定時のフォールバック) ----
@@ -806,28 +792,6 @@ const CONFIG = {
     mapUrl: "https://maps.google.com/",     // 会場のGoogleマップURL
     chouseisanUrl: "https://chouseisan.com/s?h=f5245b769ba74757a96282073a761ce0" // 今回の調整さんURL
   },
-
-  // ---- 部長挨拶 ----
-  greeting: {
-    captainName: "山田 太郎（ダミー）",
-    quote: "「うまさ」より「楽しさ」。まずは1回、遊びに来てください。",
-    body: [
-      "バドミントン部 部長の山田です。この部は「体を動かしたい」「他現場の人と話してみたい」という軽い気持ちで始まった集まりです。",
-      "経験の有無はまったく問いません。実際、部員の半分はこの部でラケットを初めて握りました。見学だけでも、途中参加・途中退出でも大歓迎です。コートで待ってます！"
-    ]
-  },
-
-  // ---- メンバー紹介 (増減自由。1人分をコピーして追加してください) ----
-  members: [
-    { name: "山田 太郎", role: "部長 / エンジョイ勢", badge: "CAPTAIN", comment: "スマッシュは打てませんが場は盛り上げます。" },
-    { name: "佐藤 花子", role: "副部長 / 経験者", badge: "VICE", comment: "中高バド部。フォーム指導ならお任せを。" },
-    { name: "鈴木 一郎", role: "会計 / 初心者", badge: "", comment: "入部して半年でようやくサーブが入るように。" },
-    { name: "田中 美咲", role: "広報 / エンジョイ勢", badge: "", comment: "活動写真は私が撮ってます。映え重視。" },
-    { name: "高橋 健", role: "ガチ勢", badge: "ACE", comment: "社会人リーグ出場経験あり。胸を貸します。" },
-    { name: "伊藤 さくら", role: "初心者", badge: "", comment: "ダブルスの動き方、絶賛勉強中です。" },
-    { name: "渡辺 大輔", role: "エンジョイ勢", badge: "", comment: "打ち上げ幹事はだいたい私です。" },
-    { name: "小林 芽衣", role: "経験者", badge: "", comment: "レシーブ職人。拾って拾って拾いまくります。" }
-  ],
 
   // ---- 過去の開催場所 (新しい順に上へ追加してください) ----
   pastEvents: [
@@ -890,8 +854,8 @@ function renderNext(ev) {
       <div class="next-info" style="grid-column: 1 / -1; text-align: center;">
         <div class="place">次回の開催は調整中です</div>
         <div class="meta">日程が決まり次第ここに表示されます。調整さんもチェックしてください!</div>
-        <div style="margin-top: 20px;">
-          <a class="btn btn-primary" href="${fallbackUrl}" target="_blank" rel="noopener">調整さんを開く <span class="arrow">→</span></a>
+        <div style="margin-top: 20px; display: flex; justify-content: center;">
+          <a class="btn btn-navy" href="${fallbackUrl}" target="_blank" rel="noopener">調整さんを開く <span class="circ">→</span></a>
         </div>
       </div>`;
     return;
@@ -916,41 +880,19 @@ function renderNext(ev) {
       <div class="countdown">${cd}<small>開催まで</small></div>
     </div>
     <div class="next-actions">
-      ${chouseiUrl ? `<a class="btn btn-primary" href="${chouseiUrl}" target="_blank" rel="noopener">出欠を登録する <span class="arrow">→</span></a>` : ""}
-      ${mapUrl ? `<a class="btn btn-secondary" href="${mapUrl}" target="_blank" rel="noopener">地図を見る <span class="arrow">→</span></a>` : ""}
+      ${chouseiUrl ? `<a class="btn btn-navy" href="${chouseiUrl}" target="_blank" rel="noopener">出欠を登録する <span class="circ">→</span></a>` : ""}
+      ${mapUrl ? `<a class="btn btn-ghost-ink" href="${mapUrl}" target="_blank" rel="noopener">地図を見る <span class="circ">→</span></a>` : ""}
     </div>`;
-}
-
-// ---------- 部長挨拶 描画 ----------
-function renderGreeting(g) {
-  document.getElementById("captain-name").textContent = g.captainName;
-  document.getElementById("greeting-body").innerHTML =
-    `<div class="quote">${esc(g.quote)}</div>` +
-    g.body.map(p => `<p>${esc(p)}</p>`).join("");
-}
-
-// ---------- メンバー 描画 ----------
-function renderMembers(members) {
-  document.getElementById("member-grid").innerHTML = members.map((m, i) => `
-    <div class="member-card reveal reveal-delay-${(i % 4) > 2 ? 3 : (i % 4)}">
-      ${m.badge ? `<span class="badge">${esc(m.badge)}</span>` : ""}
-      <span class="ph" data-label="PHOTO"></span>
-      <div class="member-body">
-        <div class="member-name">${esc(m.name)}</div>
-        <span class="member-role">${esc(m.role)}</span>
-        <p class="member-comment">${esc(m.comment)}</p>
-      </div>
-    </div>`).join("");
-  observeReveals();
 }
 
 // ---------- 過去の開催 描画 ----------
 function renderHistory(events) {
-  document.getElementById("history-list").innerHTML = events.map(ev => {
+  document.getElementById("history-list").innerHTML = events.map((ev, i) => {
     const d = parseDate(ev.date);
     if (!d) return "";
     return `
     <div class="history-item reveal">
+      <div class="history-no">${String(i + 1).padStart(2, "0")}</div>
       <div class="history-date">${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}</div>
       <div class="history-place">${esc(ev.place)}</div>
       <div class="history-note">${esc(ev.note)}</div>
@@ -971,8 +913,6 @@ function renderLinks(links) {
 
 // ---------- まずフォールバック(CONFIG内のデータ)で描画 ----------
 renderNext(CONFIG.nextEvent);
-renderGreeting(CONFIG.greeting);
-renderMembers(CONFIG.members);
 renderHistory(CONFIG.pastEvents);
 renderLinks(CONFIG.links);
 
@@ -980,7 +920,6 @@ renderLinks(CONFIG.links);
    Googleスプレッドシート読み込み (A案)
    - gviz API (公開シートをJSONで取得できるGoogleの仕組み) を使用
    - 「開催予定」タブ: 日付が今日以降 → NEXT GAME / 過去 → HISTORY に自動振り分け
-   - 「メンバー」タブ: メンバー紹介に反映
    - 読み込み失敗時は上のフォールバック表示のまま (サイトは壊れない)
    ============================================================ */
 async function fetchTab(sheetId, tabName) {
@@ -1000,10 +939,7 @@ async function fetchTab(sheetId, tabName) {
   const s = CONFIG.sheet;
   if (!s || !s.id) return; // ID未設定ならフォールバックのまま
   try {
-    const [events, members] = await Promise.all([
-      fetchTab(s.id, s.eventsTab),
-      fetchTab(s.id, s.membersTab)
-    ]);
+    const events = await fetchTab(s.id, s.eventsTab);
 
     if (events.length) {
       const today = new Date(); today.setHours(0, 0, 0, 0);
@@ -1019,23 +955,28 @@ async function fetchTab(sheetId, tabName) {
       renderNext(future[0] || null);
       if (past.length) renderHistory(past);
     }
-
-    if (members.length) {
-      renderMembers(members.map(r => ({
-        name: r["名前"], role: r["役割"], badge: r["バッジ"], comment: r["コメント"]
-      })).filter(m => m.name && !String(m.name).startsWith("※"))); // ※で始まる行=注意書きなので除外
-    }
   } catch (e) {
     console.warn("シート読み込みに失敗したため、埋め込みデータを表示しています:", e);
   }
 })();
 
-// ---------- ヘッダーのスクロール変化 ----------
-window.addEventListener("scroll", () => {
-  document.getElementById("header").classList.toggle("is-scrolled", window.scrollY > 60);
-}, { passive: true });
-
 observeReveals();
+
+// ---------- スクロール連動: 巨大シャトルの回転 ----------
+// スクロール量に比例して回転させる(全セクションがクリーム系なので線色は深紺で固定)
+(function shuttleScroll() {
+  const sb = document.getElementById("shuttle-bg");
+  if (!sb) return;
+  let ticking = false;
+  function update() {
+    ticking = false;
+    sb.style.transform = `translate(-50%, -50%) rotate(${window.scrollY * 0.12}deg)`;
+  }
+  window.addEventListener("scroll", () => {
+    if (!ticking) { ticking = true; requestAnimationFrame(update); }
+  }, { passive: true });
+  update();
+})();
 
 // ---------- 数字カウントアップ ----------
 const ioCount = new IntersectionObserver(entries => {
@@ -1053,7 +994,7 @@ const ioCount = new IntersectionObserver(entries => {
 }, { threshold: 0.6 });
 document.querySelectorAll(".count").forEach(el => ioCount.observe(el));
 
-// ---------- ヒーロー: シャトルコック軌道アニメーション ----------
+// ---------- ヒーロー: シャトルコック軌道アニメーション (クリーム背景向けの線画) ----------
 (function heroCanvas() {
   const canvas = document.getElementById("court-canvas");
   const ctx = canvas.getContext("2d");
@@ -1066,19 +1007,19 @@ document.querySelectorAll(".count").forEach(el => ioCount.observe(el));
   resize();
   window.addEventListener("resize", resize);
 
-  // シャトル(羽根)を線画で控えめに描く (白背景向け)
+  // シャトル(羽根)を線画で控えめに描く
   function drawShuttle(x, y, angle, size, alpha) {
     ctx.save();
     ctx.translate(x, y);
     ctx.rotate(angle);
     ctx.globalAlpha = alpha;
     ctx.lineWidth = 1.2 * devicePixelRatio;
-    // コルク(輪郭のみ)
+    // コルク(輪郭のみ・深紺)
     ctx.beginPath();
     ctx.arc(0, 0, size * 0.3, 0, Math.PI * 2);
     ctx.strokeStyle = "rgba(0,20,137,0.55)";
     ctx.stroke();
-    // 羽根(輪郭のみ)
+    // 羽根(輪郭のみ・墨色)
     ctx.beginPath();
     ctx.moveTo(0, 0);
     ctx.lineTo(-size, -size * 0.7);
@@ -1109,7 +1050,7 @@ document.querySelectorAll(".count").forEach(el => ioCount.observe(el));
     ctx.clearRect(0, 0, W, H);
 
     // 薄いコートライン(装飾)
-    ctx.strokeStyle = "rgba(16,20,24,0.05)";
+    ctx.strokeStyle = "rgba(16,20,24,0.06)";
     ctx.lineWidth = 1.5 * devicePixelRatio;
     ctx.strokeRect(W * 0.06, H * 0.6, W * 0.88, H * 0.37);
     ctx.beginPath();
@@ -1132,7 +1073,7 @@ document.querySelectorAll(".count").forEach(el => ioCount.observe(el));
       s.x += s.vx; s.vy += s.g; s.y += s.vy; s.life++;
       if (s.life % 5 === 0) trails.push({ x: s.x, y: s.y, r: 1.4 * devicePixelRatio, a: 1 });
       const ang = Math.atan2(s.vy, s.vx);
-      drawShuttle(s.x, s.y, ang, s.size, 0.5);
+      drawShuttle(s.x, s.y, ang, s.size, 0.6);
     });
 
     requestAnimationFrame(loop);
